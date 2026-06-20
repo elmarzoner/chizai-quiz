@@ -181,6 +181,7 @@
     <div class="qchoices" id="qChoices"></div>
     <div id="qExplain"></div>
     <div class="nav">
+      <button class="next ghost" id="quitBtn" style="flex:0 0 auto;color:var(--sub);background:#fff;border:1px solid var(--line)">やめる</button>
       <button class="next" id="nextBtn" disabled>選択してください</button>
     </div>
   </section>
@@ -1198,6 +1199,17 @@ function finish(){
 renderGamebar();
 renderBadges();
 
+document.getElementById('quitBtn').onclick=()=>{
+  const answered=state.answers.filter(a=>a!==null).length;
+  const msg=answered>0
+    ? `クイズを中断して設定に戻りますか？\n（ここまでの${answered}問分のXPは保存されます。今回の成績は記録されません）`
+    : `クイズを中断して設定に戻りますか？`;
+  if(!confirm(msg))return;
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('home').classList.remove('hidden');
+  renderGamebar();renderBadges();
+  window.scrollTo(0,0);
+};
 document.getElementById('againBtn').onclick=()=>{
   document.getElementById('result').classList.add('hidden');
   document.getElementById('home').classList.remove('hidden');
